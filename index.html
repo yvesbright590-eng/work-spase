@@ -1,0 +1,432 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at top left,
+                #334b80, #111827 55%, #050814);
+            overflow: hidden;
+            color: white;
+        }
+
+        .background-circle {
+            position: fixed;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00dbde, #4169e1);
+            filter: blur(2px);
+            opacity: 0.7;
+            top: 8%;
+            left: 12%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .background-circle.second {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            top: auto;
+            left: auto;
+            right: 10%;
+            bottom: 8%;
+            animation-delay: -3s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-25px) rotate(15deg);
+            }
+        }
+
+        .scene {
+            perspective: 1200px;
+            width: 360px;
+            max-width: calc(100vw - 32px);
+            z-index: 1;
+        }
+
+        .login-card {
+            width: 100%;
+            padding: 38px 30px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.23);
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(18px);
+            transform-style: preserve-3d;
+            transition: transform 0.15s ease;
+            animation: appear 0.8s ease;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: rotateY(-15deg) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: rotateY(0) translateY(0);
+            }
+        }
+
+        .logo {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #00dbde, #007cf0);
+            box-shadow: 0 10px 25px rgba(0, 124, 240, 0.4);
+            font-size: 30px;
+            font-weight: bold;
+            transform: translateZ(35px);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 27px;
+            margin-bottom: 8px;
+            transform: translateZ(25px);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #c5cee0;
+            font-size: 13px;
+            margin-bottom: 28px;
+            transform: translateZ(20px);
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+            transform: translateZ(20px);
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #e2e8f0;
+        }
+
+        .input-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.16);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-box:focus-within {
+            border-color: #00dbde;
+            box-shadow: 0 0 12px rgba(0, 219, 222, 0.2);
+        }
+
+        .input-box input {
+            width: 100%;
+            min-width: 0;
+            padding: 14px 12px;
+            color: white;
+            font-size: 14px;
+            background: transparent;
+            border: none;
+            outline: none;
+        }
+
+        input::placeholder {
+            color: #94a3b8;
+        }
+
+        .toggle-password {
+            border: none;
+            background: transparent;
+            color: #00dbde;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin: 4px 0 22px;
+            font-size: 12px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #d1d5db;
+        }
+
+        .remember input {
+            accent-color: #00dbde;
+        }
+
+        a {
+            color: #00dbde;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(100deg, #00dbde, #007cf0);
+            color: #071323;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 22px rgba(0, 124, 240, 0.3);
+            transition: transform 0.25s, box-shadow 0.25s;
+            transform: translateZ(25px);
+        }
+
+        .login-btn:hover {
+            transform: translateZ(35px) translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0, 124, 240, 0.5);
+        }
+
+        .message {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .signup {
+            margin-top: 24px;
+            text-align: center;
+            color: #c5cee0;
+            font-size: 13px;
+        }
+
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 10px;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 30px 22px;
+            }
+
+            .background-circle {
+                width: 160px;
+                height: 160px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background-circle"></div>
+    <div class="background-circle second"></div>
+
+    <main class="scene">
+        <section class="login-card" id="loginCard">
+
+            <div class="logo">B</div>
+
+            <h1>Welcome Back</h1>
+            <p class="subtitle">
+                Sign in to your business account
+            </p>
+
+            <form id="loginForm">
+
+                <div class="input-group">
+                    <label for="email">Business Email</label>
+                    <div class="input-box">
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="name@company.com"
+                            autocomplete="username"
+                            required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="input-box">
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                            minlength="8">
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            id="togglePassword">
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <div class="options">
+                    <label class="remember">
+                        <input type="checkbox" id="remember">
+                        Remember me
+                    </label>
+
+                    <a href="#" id="forgotPassword">
+                        Forgot password?
+                    </a>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    Sign In →
+                </button>
+
+                <p class="message" id="message"
+                   role="status" aria-live="polite"></p>
+
+            </form>
+
+            <p class="signup">
+                Don't have an account?
+                <a href="#" id="signupLink">Create account</a>
+            </p>
+
+            <p class="footer">
+                © 2026 Business Portal. All rights reserved.
+            </p>
+
+        </section>
+    </main>
+
+    <script>
+        const card = document.getElementById("loginCard");
+        const scene = document.querySelector(".scene");
+        const form = document.getElementById("loginForm");
+        const password = document.getElementById("password");
+        const togglePassword =
+            document.getElementById("togglePassword");
+        const message = document.getElementById("message");
+
+        // Show or hide password
+        togglePassword.addEventListener("click", function () {
+            const isHidden = password.type === "password";
+
+            password.type = isHidden ? "text" : "password";
+            togglePassword.textContent = isHidden ? "Hide" : "Show";
+        });
+
+        // 3D mouse movement effect
+        scene.addEventListener("mousemove", function (event) {
+            if (window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches) return;
+
+            const rect = scene.getBoundingClientRect();
+
+            const x = (event.clientX - rect.left) / rect.width;
+            const y = (event.clientY - rect.top) / rect.height;
+
+            const rotateY = (x - 0.5) * 14;
+            const rotateX = (0.5 - y) * 14;
+
+            card.style.transform =
+                `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        scene.addEventListener("mouseleave", function () {
+            card.style.transform = "rotateX(0) rotateY(0)";
+        });
+
+        // Basic front-end form validation
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const passwordValue = password.value;
+
+            if (!email || !passwordValue) {
+                message.style.color = "#fca5a5";
+                message.textContent =
+                    "Please complete all required fields.";
+                return;
+            }
+
+            if (passwordValue.length < 8) {
+                message.style.color = "#fca5a5";
+                message.textContent =
+                    "Password must contain at least 8 characters.";
+                return;
+            }
+
+            message.style.color = "#fde68a";
+            message.textContent =
+                "Form validated. Connect a secure backend to sign in.";
+        });
+
+        document.getElementById("forgotPassword")
+            .addEventListener("click", function (event) {
+                event.preventDefault();
+
+                message.style.color = "#00dbde";
+                message.textContent =
+                    "Connect this link to your password recovery page.";
+            });
+
+        document.getElementById("signupLink")
+            .addEventListener("click", function (event) {
+                event.preventDefault();
+
+                message.style.color = "#00dbde";
+                message.textContent =
+                    "Connect this link to your registration page.";
+            });
+    </script>
+
+</body>
+</html>
